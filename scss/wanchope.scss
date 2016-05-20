@@ -1,0 +1,26 @@
+////
+/// Wanchope main CSS stylesheet
+////
+
+$base-em:			0.9375em;
+$offset:			$base-em;
+
+$transition-speed:	0.25s;
+
+// 0.	CSS Reset & Clearfix
+@import "reset";
+// 1.	Document Setup
+// 2.  Structure
+// 3.	Header
+// 4.	Navigation
+// 5.	Main Content
+// 6.  Single post
+// 7.	Post Content
+// 8.	Comments
+// 9.	Pagination
+// 10.	Page & Page Templates
+// 11.	Footer
+// 12.	Credits
+// 13.	No js fallback
+// 14. Responsive
+@import "component/panel";
