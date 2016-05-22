@@ -1,0 +1,26 @@
+.DS_Store
+*.pyc
+.gaedata
+.project
+.pydevproject
+.settings
+.sass-cache
+.logo
+.start-compass.bat
+*.datastore
+*.blobstore
+*.sublime-project
+*.sublime-workspace
+*.log
+
+## Dependencyes
+node_modules
+*/**/node_modules
+bower_components
+vendor
+sassdoc
+out
+
+
+
+## Ignore submodules
