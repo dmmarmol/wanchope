@@ -254,7 +254,8 @@ function my_loadStyles() {
 	/**
 	 * CSS files
 	 */
-	wp_enqueue_style( 'wanchope', get_css_dir().'wanchope.css' ); // Wanchope styles
+	wp_enqueue_style( 'wanchope', get_stylesheet_directory_uri().'/style.css' ); // Wanchope styles
+	// wp_enqueue_style( 'wanchope', get_css_dir().'wanchope.css' ); // Wanchope styles
     // wp_enqueue_style('app', get_css_dir() . 'app.css', array(), '1.0');
     // wp_enqueue_style('cq', get_css_dir() . 'cq.css', array(), '1.0');    
     // Admin Dashicons
@@ -488,6 +489,32 @@ function my_post_class( $classes = '' ) {
 add_filter( 'post_class', 'my_post_class' );
 
 
+/*
+ * Wanchope Sidebars
+ *
+ */
+function wanchope_sidebar_reg() {
+	register_sidebar(array(
+	  'name' => __( 'Main Sidebar', 'wanchope' ),
+	  'id' => 'sidebar-main',
+	  'description' => __( 'Los widgets en esta area se mostraran a un lado del contenido', 'wanchope' ),
+	  'before_title' => '<h3 class="widget-title">',
+	  'after_title' => '</h3>',
+	  'before_widget' => '<div class="widget %2$s"><div class="widget-content">',
+	  'after_widget' => '</div><div class="clear"></div></div>'
+	));
+	register_sidebar(array(
+	  'name' => __( 'Footer Sidebar', 'wanchope' ),
+	  'id' => 'sidebar-footer',
+	  'description' => __( 'Widgets in this area will be shown in the footer.', 'wanchope' ),
+	  'before_title' => '<h3 class="widget-title">',
+	  'after_title' => '</h3>',
+	  'before_widget' => '<div class="widget %2$s"><div class="widget-content">',
+	  'after_widget' => '</div><div class="clear"></div></div>'
+	));	
+}
+// Add <aside> widget area
+add_action( 'widgets_init', 'wanchope_sidebar_reg' );
 
 
 

@@ -72,7 +72,7 @@ add_action( 'init', 'lingonberry_add_editor_styles' );
 
 
 // Add footer widget areas
-add_action( 'widgets_init', 'lingonberry_sidebar_reg' ); 
+// add_action( 'widgets_init', 'lingonberry_sidebar_reg' ); 
 
 function lingonberry_sidebar_reg() {
 	register_sidebar(array(

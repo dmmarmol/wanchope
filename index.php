@@ -2,10 +2,12 @@
 
 <div class="content section-inner">
 
+<?php /*
 	<div class="row" >
 		<a href="<?php site_url(); ?>category/<?php echo get_cat_name(55).'/'.get_cat_name(117); ?>" title="Ahora viajando"
 		   class="featured panel">¡Ahora viajando!</a>
 	</div>																                    
+*/ ?>
 
 	<?php if (have_posts()) : ?>
 	

@@ -1,3 +1,9 @@
+<?php if ( is_active_sidebar( 'main-sidebar' ) ) : ?>
+	<aside id="main-sidebar">
+		<?php get_sidebar(); ?>
+	</aside>
+<?php endif; ?>
+
 <?php if ( is_active_sidebar( 'footer-a' ) || is_active_sidebar( 'footer-b' ) || is_active_sidebar( 'footer-c' ) ) : ?>
 
 	<div class="footer section">

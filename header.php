@@ -15,48 +15,36 @@
 
 		<?php if (in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) { ?>
 			<!-- Development only -->
-    		<script src="//localhost:35732/livereload.js?snipver=1" type="text/javascript"></script>
+    		<script src="//localhost:35729/livereload.js?snipver=1" type="text/javascript"></script>
 		<?php } ?>
 	
 	</head>
 	
-	<body <?php body_class(); ?>>
-	
-		<div class="navigation">
+	<body <?php body_class(); ?> style="background-color: <?php get_background_color(); ?>; background-image: <?php get_background_image(); ?>; ">
+
+		<div class="offcanvas">
+			
+			<?php if ( has_nav_menu( 'primary' ) ) {
+																
+				wp_nav_menu( array( 
 				
-			<div class="navigation-inner section-inner">
-		
-				<ul class="blog-menu">
+					'container' => '', 
+					'items_wrap' => '%3$s',
+					'theme_location' => 'primary', 
+					'walker' => new lingonberry_nav_walker
+												
+				) ); } else {
+			
+				wp_list_pages( array(
 				
-					<?php if ( has_nav_menu( 'primary' ) ) {
-																		
-						wp_nav_menu( array( 
-						
-							'container' => '', 
-							'items_wrap' => '%3$s',
-							'theme_location' => 'primary', 
-							'walker' => new lingonberry_nav_walker
-														
-						) ); } else {
-					
-						wp_list_pages( array(
-						
-							'container' => '',
-							'title_li' => ''
-						
-						));
-						
-					} ?>
-					
-				 </ul>
-				 
-				 <?php get_search_form(); ?>
-				 
-				 <div class="clear"></div>
-			 
-			</div> <!-- /navigation-inner -->
-		 
-		</div> <!-- /navigation -->
+					'container' => '',
+					'title_li' => ''
+				
+				));
+				
+			} ?>
+
+		</div>
 	
 		<div class="header section">
 				
