@@ -1,0 +1,41 @@
+{
+  "name": "wp-wanchope",
+  "version": "1.0.0",
+  "description": "Wanchope is a minimal wordpress theme",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Wanchope",
+    "Huracan",
+    "Wordpress",
+    "Theme",
+    "Avila",
+    "Ramon"
+  ],
+  "author": "Diego Martin Marmol",
+  "license": "ISC",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.7",
+    "gulp-concat": "^2.6.0",
+    "gulp-email": "0.0.7",
+    "gulp-html-replace": "^1.5.5",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-iconfont": "^5.0.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-merge": "^0.1.1",
+    "gulp-nunjucks-render": "^2.0.0",
+    "gulp-preprocess": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",
+    "gulp-zip": "^3.2.0",
+    "merge-stream": "^1.0.0",
+    "run-sequence": "^1.1.5"
+  }
+}
