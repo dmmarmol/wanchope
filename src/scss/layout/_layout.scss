@@ -1,0 +1,106 @@
+$content-inner-width: 		87.5%;
+
+$side-content-width: 		100% - $content-inner-width;
+$header-left-margin: 		$side-content-width;
+
+$post-bubble-size: 			50px;
+
+@import "header";
+@import "navigation";
+
+
+.container {
+
+}
+
+
+
+/**
+ * Push-to-right elements
+ */
+.content-inner,
+.post-nav {
+	@include clear();
+    width: $content-inner-width;
+    margin-left: $side-content-width;
+}
+
+/**
+ * Vertical gray line
+ */
+.vertical-guide {
+	&:before, &:after {
+	    content: "";
+	    display: block;
+	    position: absolute;
+	}
+	&:before {
+	    left: 40px;
+	    bottom: 63px;
+	    height: 20px;
+	    width: 20px;
+	    background: #DDD;
+	    border-radius: 999px;
+	    z-index: 10;
+	}
+	&:after {
+	    left: $side-content-width / 3;
+	    bottom: 63px;
+	    width: 2px;
+	    height: 100%;
+	    background: rgba(0,0,0,0.05);
+	    z-index: 1;
+	}
+}
+
+
+.content-inner {
+    // float: right;
+    position: relative;
+    padding: 5.5%;
+    background: #FFF;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    // Flecha izquierda
+    &:before, &:after {
+		content: "";
+		position: absolute;
+		display: block;
+    }
+    &:before {
+		border: floor($post-bubble-size / 4) solid transparent;
+		border-right-color: #DDD;
+		top: $post-bubble-size * 1.33;
+		left: -24px; // -($post-bubble-size / 2);
+    }
+    &:after {
+		border: (floor($post-bubble-size / 4) - 1px) solid transparent;
+		border-right-color: #FFF;
+		top: ($post-bubble-size * 1.33) + 1px;
+		left: -22px;
+		// left: -20px;
+    }
+}
+
+
+/**
+ * Post list container
+ */
+.posts {
+	position: relative;
+	padding-top: $offset * 4;
+}
+
+.post {
+    position: relative;
+    margin-top: 50px;
+	&:first-child {
+	    margin-top: 0;
+	}
+	> .content-inner {
+	    border-radius: 4px;
+	}
+}
+
+.posts, .post {
+	@include clear();
+}

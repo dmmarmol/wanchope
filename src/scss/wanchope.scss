@@ -1,0 +1,129 @@
+////
+/// Wanchope main CSS stylesheet
+////
+
+$base-em:			0.9375em;
+$offset:			$base-em;
+
+$transition-speed:	0.25s;
+$animation-speed: 	$transition-speed * 2;
+
+// Colors
+$title-color: 			#2D3642;
+$text-color:			#555;
+$text-muted:			#999;
+$ui-color-primary: 		#DDD;
+$ui-color-secondary: 	#f1f1f1;
+
+// Text
+$font-size-h1: 		2.75em;
+$font-size-h2: 		2.25em;
+// $font-size-h3: 1em;
+// $font-size-h4: 1em;
+// $font-size-h5: 1em;
+// $font-size-h6: 1em;
+
+// @import "reset";
+h1, h2, h3, h4, h5, h6, p, blockquote, address, big, cite, code, em, font, img, small, strike, sub, sup, li, ol, ul, fieldset, form, label, legend, button, table, caption, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 100%;
+    line-height: 1;
+    font-family: inherit;
+    text-align: left;
+}
+
+// Bootstrap
+// @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "bootstrap-sass/bootstrap";
+@import "../../bower_components/bodokecss/bodokecss/utils/mixins";
+@import "../../bower_components/bodokecss/bodokecss/utils/functions";
+
+// Wanchope
+@import "layout/layout";
+@import "component/panel";
+@import "component/post";
+
+
+/* estilos.css */
+
+main {
+	&.container, &.container-fluid {
+		> .container {
+			// background-color: #FFF;
+			// padding-left: $offset * 3;
+		}
+	}
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    border: none;
+    zoom: 1.001;
+    color: $text-color;
+    background: $ui-color-secondary;
+    // font-family: 'Lato', 'Helvetica Neue', sans-serif;
+    font-family: 'Raleway', 'Helvetica Neue', sans-serif;
+    word-break: break-word;
+    hyphens: auto;
+    hyphens: auto;
+}
+
+h1 { font-size: 1.875em; }
+h2 { font-size: 2.25em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.125em; }
+h5 { font-size: 1.142857143em; }
+h6 { font-size: 1.33em; }
+
+.navbar {
+    display: none;
+}
+
+.token.operator,
+.token.entity,
+.token.url, .language-css
+.token.string, .style
+.token.string,
+.token.variable {
+    background: transparent;
+}
+
+.post-content .content {
+    padding-top: 0;
+}
+
+img { max-width: 100%; }
+pre code { display: block; }
+pre, code {white-space:normal;}
+
+pre {
+    margin-bottom: 2.5em;
+}
+
+.token.operator,
+.token.entity,
+.token.url, .language-css
+.token.string, .style
+.token.string,
+.token.variable {
+	background: transparent;
+}
+
+.post-content {
+	.content {
+		padding-top: 0;
+	}
+}
+
+img { max-width: 100%; }
+pre code { display: block; }
+pre, code {white-space:normal;}
+
+pre {
+	margin-bottom: 2.5em;
+}
