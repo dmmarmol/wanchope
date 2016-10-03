@@ -1,28 +1,29 @@
-var gulp			= require('gulp');
 var autoprefixer 	= require('gulp-autoprefixer');
-var cleanCSS 	 	= require('gulp-clean-css');	// Min Css
 var concat       	= require('gulp-concat');
+var cleanCSS 	 	= require('gulp-clean-css');	// Min Css
 var email 			= require('gulp-email');
-var minhtml      	= require('gulp-htmlmin');		// Min Html
+var gulp			= require('gulp');
+var gutil		 	= require('gulp-util');
 // var iconfont 		= require('gulp-iconfont');
 // var iconfontCss 	= require('gulp-iconfont-css');
+var htmlreplace 	= require('gulp-html-replace');
 var livereload	 	= require('gulp-livereload');
+var merge 		 	= require('merge-stream'); // https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-multiple-sources-in-one-task.md
+var minhtml      	= require('gulp-htmlmin');		// Min Html
+var notify 			= require("gulp-notify");
 var nunjucksRender 	= require('gulp-nunjucks-render');
 var preprocess 	 	= require('gulp-preprocess');
 var rename 		 	= require("gulp-rename");
+var runSequence  	= require('run-sequence');
 var sass	 	 	= require('gulp-sass');
 var sourcemaps 		= require('gulp-sourcemaps');
-var gutil		 	= require('gulp-util');
-var merge 		 	= require('merge-stream'); // https://github.com/gulpjs/gulp/blob/master/docs/recipes/using-multiple-sources-in-one-task.md
-var runSequence  	= require('run-sequence');
-var htmlreplace 	= require('gulp-html-replace');
 var zip 			= require('gulp-zip');
- 
+
 
 var node_path 	 	= 'node_modules';
 var root 		 	= './';
 var PORT 			= 35729;
-var PROJECTNAME		= 'wp-wanchope';
+var PROJECTNAME		= 'wanchope';
 
 var today 	= new Date();
 var dd 		= today.getDate();
@@ -48,40 +49,23 @@ var DEV	= {
 	FONTS: 		'./src/fonts',
 	ICONS: 		'./src/icons/*.svg',
 	EMAIL: 		['./templates/email.html'],
-	ZIPFILE: 	date + '-' + PROJECTNAME.toLowerCase() + '.zip'
+	ZIPFILE: 	date + '-' + PROJECTNAME.toLowerCase() + '.zip',
+	SASS: {
+		FOLDER: 	'./src/scss',
+		FILES: 		'./src/scss/**/*.scss',
+	}
 }
-var PUBLIC = {
-	FOLDER: 	'./dist',
-	HTML: 		['./dist/**/*.html'],
-	ASSETS: 	'./dist/src',
-	CSS: 		'./dist/src/css',
-	VENDOR: 	'./dist/src/vendor',
-	FONTS: 		'./dist/src/fonts',
-}
-var SASS = {
-	FOLDER: 	'./scss',
-	FILES: 		'./scss/**/*.scss',
-}
+
 var BOWER = {
 	FOLDER: './bower_components',
 	PACKAGES: {
-		CSS:[ 
-			'bootstrap/dist/css/bootstrap.min.css',
-			// 'bootstrap-material-design/dist/css/bootstrap-material-design.min.css',
-			'bootstrap-material-design/dist/css/ripples.min.css',
-			// 'bootstrap-offcanvas/dist/css/bootstrap.offcanvas.min.css'
+		CSS:[
 		],
 		JS: [
-			'jquery/dist/jquery.min.js',
-			'bootstrap/dist/js/bootstrap.min.js',
-			'bootstrap-material-design/dist/js/material.min.js',
-			'bootstrap-offcanvas/dist/js/bootstrap.offcanvas.min.js'
 		],
 		SCSS: [
-			'bootstrap-offcanvas/src/sass/_vars.scss',
-			'bootstrap-offcanvas/src/sass/bootstrap.offcanvas.scss',
-			'bootstrap-material-design/sass/**/*.scss',
-			'font-awesome/scss/**/*.scss'
+			'bootstrap-sass/assets/stylesheets/**/*.scss',
+			// 'bodokecss/bodokecss/**/*.scss'
 		]
 	}
 };
@@ -110,24 +94,6 @@ var options = {
 };
 
 
-function getPackageName( package ) {
-	var a = package.split('/');
-	var l = a.length;
-	return a[l - 1];
-}
-function getPackageFolder( package ) {
-	var a = package.split('/');
-	var l = a.length;
-	return a[0];
-}
-// Testing Prupouses
-gulp.task('log', function(){
-	BOWER.PACKAGES.CSS.forEach(function(package, i, array){
-		gutil.log();
-	});
-});
-
-
 /**
  * ========================================
  * GULP TASK
@@ -137,7 +103,7 @@ gulp.task('log', function(){
 
 // TASK
 gulp.task('default', function(){
-	runSequence( ['style-css'], 'watch' );
+	runSequence( 'bower', ['style-css'], 'watch' );
 });
 
 // WATCH SCSS TASK
@@ -147,33 +113,43 @@ gulp.task('watch', function () {
     gulp.watch( DEV.PHP, function(event){
     	runSequence('reload');
     });
-    // SCSS Watch    
-    gulp.watch( SASS.FILES, function(event){
+    // SCSS Watch
+    gulp.watch( DEV.SASS.FILES, function(event){
     	runSequence('style-css', 'reload');
     });
     // Vendor Watch
     // gulp.watch( [path.templates], ['reload'] );
-    
+
     // gulp.watch( ['./assets/scss/font-awesome/**/*.scss'], ['font-awesome'] );
 });
 
 
+/** RELOAD */
+gulp.task('reload', function() {
+	notify('Reloading...');
+	return livereload.reload();
+});
+
+
+
 
 /**
- * SCSS/CSS Propio 
+ * SCSS/CSS Propio
  * ----------------------------------------
  */
 
 /**
  * Compila el scss y guarda en DEV.CSS
  */
-gulp.task('compile-sass', function () {	
-	return gulp.src( SASS.FILES )
+gulp.task('compile-sass', function () {
+	return gulp.src( DEV.SASS.FILES )
 		.pipe(sourcemaps.init())
-		.pipe(sass({ 
-			includePaths: SASS.FILES,
+		.pipe(sass({
+			includePaths: DEV.SASS.FILES,
 			sourceComments: false
-		}).on('error', sass.logError))
+		}).on('error', notify.onError(function (error) {
+			return "Problem file : " + error.message;
+		})))
 		.pipe(autoprefixer({ browsers: AUTOPREFIXER_BROWSERS, cascade: false }))
 		.pipe(preprocess({context: { NODE_PATH: node_path }}))
 		.pipe(sourcemaps.write())
@@ -194,21 +170,38 @@ gulp.task('style-css', ['compile-sass'], function(){
 });
 
 
-gulp.task('copy-dev-css-to-dist', function() {
-	gulp.src( DEV.CSS + '/**/*.css' )
-   		.pipe( gulp.dest( PUBLIC.CSS + '/' ) );	
-	gutil.log('----- Copied all '+DEV.CSS+' to –-> '+PUBLIC.CSS);	
-});
+// gulp.task('copy-dev-css-to-dist', function() {
+// 	gulp.src( DEV.CSS + '/**/*.css' )
+//    		.pipe( gulp.dest( PUBLIC.CSS + '/' ) );
+// 	gutil.log('----- Copied all '+DEV.CSS+' to –-> '+PUBLIC.CSS);
+// });
 
-gulp.task('generate-public-css', function(callback) {
-	runSequence( 'compile-sass', 'copy-dev-css-to-dist', callback);
-});
+// gulp.task('generate-public-css', function(callback) {
+// 	runSequence( 'compile-sass', 'copy-dev-css-to-dist', callback);
+// });
 
 
 /**
- * Vendor
+ * BOWER
  * ----------------------------------------
  */
+
+function getPackageName( package ) {
+	var a = package.split('/');
+	var l = a.length;
+	return a[l - 1];
+}
+function getPackageFolder( package ) {
+	var a = package.split('/');
+	var l = a.length;
+	return a[0];
+}
+// Testing Prupouses
+gulp.task('log', function(){
+	BOWER.PACKAGES.CSS.forEach(function(package, i, array){
+		gutil.log();
+	});
+});
 
 /**
  * Copia el css de bower a DEV.CSS (para luego ser minimizado y llevado a PUBLIC.VENDOR)
@@ -217,8 +210,8 @@ gulp.task('copy-vendor-css-to-dev', function() {
 	BOWER.PACKAGES.CSS.forEach(function(package, i, array){
 		gulp.src( BOWER.FOLDER + '/' + package )
 			.pipe( gulp.dest( DEV.VENDOR + '/css/' ) );
-		gutil.log('--- Copied '+ getPackageName( package ) +' to –-> '+DEV.VENDOR);	
-	});		
+		gutil.log('--- Copied '+ getPackageName( package ) +' to –-> '+DEV.VENDOR);
+	});
 });
 /**
  * Copia el JS de bower a DEV.CSS (para luego ser minimizado y llevado a PUBLIC.VENDOR)
@@ -227,22 +220,22 @@ gulp.task('copy-vendor-js-to-dev', function() {
 	BOWER.PACKAGES.JS.forEach(function(package, i, array){
 		gulp.src( BOWER.FOLDER + '/' + package )
 			.pipe( gulp.dest( DEV.VENDOR + '/js/' ) );
-		gutil.log('--- Copied '+ getPackageName( package ) +' to –-> '+DEV.VENDOR);	
-	});		
+		gutil.log('--- Copied '+ getPackageName( package ) +' to –-> '+DEV.VENDOR);
+	});
 });
 /**
- * Copia el SCSS de bower a SASS.FOLDER
+ * Copia el SCSS de bower a DEV.SASS.FOLDER
  */
 gulp.task('copy-vendor-scss-to-sass', function() {
 	BOWER.PACKAGES.SCSS.forEach(function(package, i, array){
 		gulp.src( BOWER.FOLDER + '/' + package )
-			.pipe( gulp.dest( SASS.FOLDER + '/' + getPackageFolder(package) +'/' ) );
-		gutil.log('--- Copied '+ getPackageName( package ) +' to –-> '+DEV.VENDOR);	
-	});		
+			.pipe( gulp.dest( DEV.SASS.FOLDER + '/' + getPackageFolder(package) +'/' ) );
+		gutil.log('--- Copied '+ getPackageName( package ) +' to –-> '+DEV.VENDOR);
+	});
 });
 
-gulp.task('copy-vendor-assets', function(callback) {
-	runSequence( 'copy-vendor-css-to-dev', 'copy-vendor-js-to-dev', callback);
+gulp.task('bower', function(callback) {
+	runSequence( 'copy-vendor-css-to-dev', 'copy-vendor-js-to-dev', 'copy-vendor-scss-to-sass', callback);
 });
 
 
@@ -254,25 +247,25 @@ gulp.task('copy-vendor-assets', function(callback) {
 /**
  * Compila los templates de nunjucks y los lleva a PUBLIC.DIST
  */
-gulp.task('compile-dev-html', function() {
-	return gulp.src( DEV.TEMPLATES.PAGES )
-		.pipe(nunjucksRender({
-			path: DEV.TEMPLATES.FOLDER // array
-		}))
-		.pipe( rename({ extname: ".html" }) )
-		.pipe( gulp.dest( DEV.FOLDER + '/' ) );
-});
-gulp.task('set-livereload-port', function(){
-	// <!-- build:livereload --><!-- endbuild -->		
-	return gulp.src( DEV.HTML, { base: DEV.FOLDER } )
-		.pipe(htmlreplace({ 
-			livereload: {
-				src: PORT,
-				tpl: '<script src="//localhost:%s/livereload.js?snipver=1" type="text/javascript"></script>' 
-			} 
-		}))
-		.pipe( gulp.dest( './' ) );
-});
+// gulp.task('compile-dev-html', function() {
+// 	return gulp.src( DEV.TEMPLATES.PAGES )
+// 		.pipe(nunjucksRender({
+// 			path: DEV.TEMPLATES.FOLDER // array
+// 		}))
+// 		.pipe( rename({ extname: ".html" }) )
+// 		.pipe( gulp.dest( DEV.FOLDER + '/' ) );
+// });
+// gulp.task('set-livereload-port', function(){
+// 	// <!-- build:livereload --><!-- endbuild -->
+// 	return gulp.src( DEV.HTML, { base: DEV.FOLDER } )
+// 		.pipe(htmlreplace({
+// 			livereload: {
+// 				src: PORT,
+// 				tpl: '<script src="//localhost:%s/livereload.js?snipver=1" type="text/javascript"></script>'
+// 			}
+// 		}))
+// 		.pipe( gulp.dest( './' ) );
+// });
 
 
 
@@ -284,11 +277,11 @@ gulp.task('set-livereload-port', function(){
 // var fontName = PROJECTNAME.toLowerCase();
 // var runTimestamp = Math.round(Date.now()/1000);
 // gulp.task('my-material-icons', function(){
-//   return gulp.src( DEV.ICONS )  
+//   return gulp.src( DEV.ICONS )
 //     .pipe(iconfontCss({
 //       	fontName: fontName,
-//       	path: SASS.FOLDER + '/'+ fontName +'/_template.scss', // 'scss/app/fonts/_template.scss',
-//       	targetPath: '../../.'+ SASS.FOLDER +'/'+fontName+'/_'+fontName+'.scss', // '../../../scss/app/fonts/'+fontName+'.scss',
+//       	path: DEV.SASS.FOLDER + '/'+ fontName +'/_template.scss', // 'scss/app/fonts/_template.scss',
+//       	targetPath: '../../.'+ DEV.SASS.FOLDER +'/'+fontName+'/_'+fontName+'.scss', // '../../../scss/app/fonts/'+fontName+'.scss',
 //       	fontPath: DEV.FONTS + '/' // '../../../src/fonts/'+fontName+'/'
 //     }))
 //     .pipe(iconfont({
@@ -302,32 +295,3 @@ gulp.task('set-livereload-port', function(){
 //     .pipe(gulp.dest( DEV.FONTS ));
 // });
 
-
-
-/**
- * RELOAD
- * ----------------------------------------
- */
-gulp.task('reload', function() {
-	return livereload.reload();
-});
-
-
-/**
- * ZIP FILES
- * ----------------------------------------
- */
-gulp.task('zip', function(){
-	return gulp.src( [DEV.HTML, DEV.ASSETS])
-		.pipe( zip( DEV.ZIPFILE) )
-		.pipe( gulp.dest( './zip/' ) );
-});
-
-/**
- * SEND EMAIL
- * ----------------------------------------
- */
-gulp.task('email', ['zip'], function () {
-	return gulp.src( DEV.EMAIL )
-		.pipe( email(options) );
-});

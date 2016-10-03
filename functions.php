@@ -6,16 +6,16 @@ include_once "src/php/my-functions.php";
 add_action( 'after_setup_theme', 'lingonberry_setup' );
 
 function lingonberry_setup() {
-	
+
 	// Automatic feed
 	add_theme_support( 'automatic-feed-links' );
-	
+
 	// Custom background
 	add_theme_support( 'custom-background' );
-	
+
 	// Post formats
 	add_theme_support( 'post-formats', array( 'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video' ) );
-	
+
 	// Post thumbnails
 	add_theme_support( 'post-thumbnails', array( 'post', 'page' ) );
 	add_image_size( 'post-image', 766, 9999 );
@@ -23,18 +23,18 @@ function lingonberry_setup() {
 	// Custom header (logo)
 	$custom_header_args = array( 'width' => 200, 'height' => 200, 'header-text' => false );
 	add_theme_support( 'custom-header', $custom_header_args );
-	
+
 	// Add nav menu
 	register_nav_menu( 'primary', 'Primary Menu' );
-	
+
 	// Make the theme translation ready
 	load_theme_textdomain('lingonberry', get_template_directory() . '/languages');
-	
+
 	$locale = get_locale();
 	$locale_file = get_template_directory() . "/languages/$locale.php";
 	if ( is_readable($locale_file) )
 	  require_once($locale_file);
-	
+
 }
 
 // Enqueue Javascript files
@@ -53,8 +53,8 @@ add_action( 'wp_enqueue_scripts', 'lingonberry_load_javascript_files' );
 // Enqueue styles
 function lingonberry_load_style() {
 	if ( !is_admin() ) {
-	    wp_enqueue_style( 'lingonberry_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Raleway:600,500,400' );
-	    wp_enqueue_style( 'lingonberry_style', get_stylesheet_uri() );
+	    // wp_enqueue_style( 'lingonberry_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Raleway:600,500,400' );
+	    // wp_enqueue_style( 'lingonberry_style', get_stylesheet_uri() );
 	    wp_enqueue_style( 'wanchope', get_css_dir().'wanchope.css' ); // Wanchope styles
 	}
 }
@@ -72,7 +72,7 @@ add_action( 'init', 'lingonberry_add_editor_styles' );
 
 
 // Add footer widget areas
-// add_action( 'widgets_init', 'lingonberry_sidebar_reg' ); 
+// add_action( 'widgets_init', 'lingonberry_sidebar_reg' );
 
 function lingonberry_sidebar_reg() {
 	register_sidebar(array(
@@ -83,7 +83,7 @@ function lingonberry_sidebar_reg() {
 	  'after_title' => '</h3>',
 	  'before_widget' => '<div class="widget %2$s"><div class="widget-content">',
 	  'after_widget' => '</div><div class="clear"></div></div>'
-	));	
+	));
 	register_sidebar(array(
 	  'name' => __( 'Footer B', 'lingonberry' ),
 	  'id' => 'footer-b',
@@ -103,10 +103,10 @@ function lingonberry_sidebar_reg() {
 	  'after_widget' => '</div><div class="clear"></div></div>'
 	));
 }
-	
+
 // Add theme widgets
-require_once (get_template_directory() . "/widgets/dribbble-widget.php");  
-require_once (get_template_directory() . "/widgets/flickr-widget.php");  
+require_once (get_template_directory() . "/widgets/dribbble-widget.php");
+require_once (get_template_directory() . "/widgets/flickr-widget.php");
 require_once (get_template_directory() . "/widgets/video-widget.php");
 
 
@@ -173,7 +173,7 @@ class lingonberry_nav_walker extends Walker_Nav_Menu {
 add_action('body_class', 'lingonberry_if_featured_image_class' );
 
 function lingonberry_if_featured_image_class($classes) {
-	if ( has_post_thumbnail() ) { 
+	if ( has_post_thumbnail() ) {
 		array_push($classes, 'has-featured-image');
 	}
 	return $classes;
@@ -193,7 +193,7 @@ function lingonberry_flexslider($size = thumbnail) {
 
 	if ( is_page()) :
 		$attachment_parent = $post->ID;
-	else : 
+	else :
 		$attachment_parent = get_the_ID();
 	endif;
 
@@ -206,14 +206,14 @@ function lingonberry_flexslider($size = thumbnail) {
                 'orderby'        => 'menu_order',
                 'order'           => 'ASC',
 	))) { ?>
-	
+
 		<div class="flexslider">
-		
+
 			<ul class="slides">
-	
-				<?php foreach($images as $image) { 
+
+				<?php foreach($images as $image) {
 					$attimg = wp_get_attachment_image($image->ID,$size); ?>
-					
+
 					<li>
 						<?php echo $attimg; ?>
 						<?php if ( !empty($image->post_excerpt)) : ?>
@@ -222,13 +222,13 @@ function lingonberry_flexslider($size = thumbnail) {
 							</div>
 						<?php endif; ?>
 					</li>
-					
+
 				<?php }; ?>
-		
+
 			</ul>
-			
+
 		</div><?php
-		
+
 	}
 }
 
@@ -244,9 +244,9 @@ function lingonberry_fixed_img_caption_shortcode($attr, $content = null) {
 			$attr['caption'] = trim( $matches[2] );
 		}
 	}
-	
+
 	$output = apply_filters('img_caption_shortcode', '', $attr, $content);
-	
+
 	if ( $output != '' ) return $output;
 	extract(shortcode_atts(array(
 		'id' => '',
@@ -254,11 +254,11 @@ function lingonberry_fixed_img_caption_shortcode($attr, $content = null) {
 		'width' => '',
 		'caption' => ''
 	), $attr));
-	
+
 	if ( 1 > (int) $width || empty($caption) )
 	return $content;
 	if ( $id ) $id = 'id="' . esc_attr($id) . '" ';
-	return '<div ' . $id . 'class="wp-caption ' . esc_attr($align) . '" >' 
+	return '<div ' . $id . 'class="wp-caption ' . esc_attr($align) . '" >'
 	. do_shortcode( $content ) . '<p class="wp-caption-text">' . $caption . '</p></div>';
 }
 
@@ -279,7 +279,7 @@ function cd_meta_box_audiourl( $post ) {
 		<p>
 			<input type="text" class="widefat" name="audiourl" id="audiourl" value="<?php echo $audiourl; ?>" />
 		</p>
-	<?php		
+	<?php
 }
 
 
@@ -291,42 +291,42 @@ function cd_meta_box_videourl( $post ) {
 		<p>
 			<input type="text" class="widefat" name="videourl" id="videourl" value="<?php echo $videourl; ?>" />
 		</p>
-	<?php		
+	<?php
 }
 
 add_action( 'save_post', 'cd_meta_box_save' );
 function cd_meta_box_save( $post_id ) {
 	// Bail if we're doing an auto save
 	if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-	
+
 	// if our nonce isn't there, or we can't verify it, bail
 	if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], 'my_meta_box_nonce' ) ) return;
-	
+
 	// if our current user can't edit this post, bail
 	if( !current_user_can( 'edit_post' ) ) return;
-	
+
 	// now we can actually save the data
-	$allowed = array( 
+	$allowed = array(
 		'a' => array( // on allow a tags
 			'href' => array() // and those anchords can only have href attribute
 		)
 	);
-	
-	// Probably a good idea to make sure the data is set		
+
+	// Probably a good idea to make sure the data is set
 	if( isset( $_POST['audiourl'] ) ) {
 		update_post_meta( $post_id, 'audiourl', wp_kses( $_POST['audiourl'], $allowed ) );
 	}
 	if( isset( $_POST['videourl'] ) ) {
 		update_post_meta( $post_id, 'videourl', wp_kses( $_POST['videourl'], $allowed ) );
 	}
-	
+
 }
 
 
 // Style the admin area
 function lingonberry_custom_colors() {
    echo '<style type="text/css">
-   
+
 #postlink-box #postlink,
 #postaudio-box #audiourl,
 #postvideo-box #videourl {
@@ -352,11 +352,11 @@ function lingonberry_comment( $comment, $args, $depth ) {
 		case 'pingback' :
 		case 'trackback' :
 	?>
-	
+
 	<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
-	
+
 		<?php __( 'Pingback:', 'lingonberry' ); ?> <?php comment_author_link(); ?> <?php edit_comment_link( __( '(Edit)', 'lingonberry' ), '<span class="edit-link">', '</span>' ); ?>
-		
+
 	</li>
 	<?php
 			break;
@@ -364,56 +364,56 @@ function lingonberry_comment( $comment, $args, $depth ) {
 		global $post;
 	?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-	
+
 		<div id="comment-<?php comment_ID(); ?>" class="comment">
-		
+
 			<div class="comment-meta comment-author vcard">
-							
+
 				<?php echo get_avatar( $comment, 120 ); ?>
 
 				<div class="comment-meta-content">
-											
+
 					<?php printf( '<cite class="fn">%1$s %2$s</cite>',
 						get_comment_author_link(),
 						( $comment->user_id === $post->post_author ) ? '<span class="post-author"> ' . __( '(Post author)', 'lingonberry' ) . '</span>' : ''
 					); ?>
-					
+
 					<p><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ) ?>"><?php echo get_comment_date() . ' &mdash; ' . get_comment_time() ?></a></p>
-					
+
 				</div> <!-- /comment-meta-content -->
-				
+
 				<div class="comment-actions">
-				
+
 					<?php edit_comment_link( __( 'Edit', 'lingonberry' ), '', '' ); ?>
-					
+
 					<?php comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply', 'lingonberry' ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-									
+
 				</div> <!-- /comment-actions -->
-				
+
 				<div class="clear"></div>
-				
+
 			</div> <!-- /comment-meta -->
 
 			<div class="comment-content post-content">
-			
+
 				<?php if ( '0' == $comment->comment_approved ) : ?>
-				
+
 					<p class="comment-awaiting-moderation"><?php __( 'Your comment is awaiting moderation.', 'lingonberry' ); ?></p>
-					
+
 				<?php endif; ?>
-			
+
 				<?php comment_text(); ?>
-				
+
 				<div class="comment-actions">
-				
+
 					<?php edit_comment_link( __( 'Edit', 'lingonberry' ), '', '' ); ?>
-					
+
 					<?php comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply', 'lingonberry' ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-					
+
 					<div class="clear"></div>
-				
+
 				</div> <!-- /comment-actions -->
-				
+
 			</div><!-- /comment-content -->
 
 		</div><!-- /comment-## -->
@@ -428,34 +428,34 @@ endif;
 class lingonberry_Customize {
 
    public static function lingonberry_register ( $wp_customize ) {
-   
+
       //1. Define a new section (if desired) to the Theme Customizer
-      $wp_customize->add_section( 'lingonberry_options', 
+      $wp_customize->add_section( 'lingonberry_options',
          array(
             'title' => __( 'Options for Lingonberry', 'lingonberry' ), //Visible title of section
             'priority' => 35, //Determines what order this appears in
             'capability' => 'edit_theme_options', //Capability needed to tweak
             'description' => __('Allows you to customize theme settings for Lingonberry.', 'lingonberry'), //Descriptive tooltip
-         ) 
+         )
       );
-            
-      
+
+
       //2. Register new settings to the WP database...
       $wp_customize->add_setting( 'accent_color', //No need to use a SERIALIZED name, as `theme_mod` settings already live under one db record
          array(
             'default' => '#FF706C', //Default setting/value to save
             'type' => 'theme_mod', //Is this an 'option' or a 'theme_mod'?
             'transport' => 'postMessage', //What triggers a refresh of the setting? 'refresh' or 'postMessage' (instant)?
-         ) 
+         )
       );
-	  
-	  $wp_customize->add_setting( 'lingonberry_logo', 
-      	array( 
+
+	  $wp_customize->add_setting( 'lingonberry_logo',
+      	array(
       		'sanitize_callback' => 'esc_url_raw'
-      	) 
+      	)
       );
-      
-      
+
+
       //3. Finally, we define the control itself (which links a setting to a section and renders the HTML controls)...
       $wp_customize->add_control( new WP_Customize_Color_Control( //Instantiate the color control class
          $wp_customize, //Pass the $wp_customize object (required)
@@ -465,9 +465,9 @@ class lingonberry_Customize {
             'section' => 'colors', //ID of the section this control should render in (can be one of yours, or a WordPress default section)
             'settings' => 'accent_color', //Which setting to load and manipulate (serialized is okay)
             'priority' => 10, //Determines the order this control appears in for the specified section
-         ) 
+         )
       ) );
-      
+
       //4. We can also change built-in settings by modifying properties. For instance, let's make some stuff use live preview JS...
       $wp_customize->get_setting( 'blogname' )->transport = 'postMessage';
       $wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
@@ -475,9 +475,9 @@ class lingonberry_Customize {
 
    public static function lingonberry_header_output() {
       ?>
-      
-	      <!-- Customizer CSS --> 
-	      
+
+	      <!-- Customizer CSS -->
+
 	      <style type="text/css">
 	           <?php self::lingonberry_generate_css('body a', 'color', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('body a:hover', 'color', 'accent_color'); ?>
@@ -508,20 +508,20 @@ class lingonberry_Customize {
 	           <?php self::lingonberry_generate_css('.post-content input[type="button"]:hover', 'background', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('.post-content input[type="reset"]:hover', 'background', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('.comment-header h4 a:hover', 'color', 'accent_color'); ?>
-	           <?php self::lingonberry_generate_css('.form-submit #submit:hover', 'background-color', 'accent_color'); ?>	           
-	      </style> 
-	      
+	           <?php self::lingonberry_generate_css('.form-submit #submit:hover', 'background-color', 'accent_color'); ?>
+	      </style>
+
 	      <!--/Customizer CSS-->
-	      
+
       <?php
    }
-   
+
    public static function lingonberry_live_preview() {
-      wp_enqueue_script( 
+      wp_enqueue_script(
            'lingonberry-themecustomizer', // Give the script a unique ID
            get_template_directory_uri() . '/js/theme-customizer.js', // Define the path to the JS file
            array(  'jquery', 'customize-preview' ), // Define dependencies
-           '', // Define a version (optional) 
+           '', // Define a version (optional)
            true // Specify whether to put in footer (leave this true)
       );
    }

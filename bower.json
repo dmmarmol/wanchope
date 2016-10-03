@@ -25,5 +25,8 @@
   ],
   "dependencies": {
     "bootstrap-sass": "~3.3.6"
+  },
+  "devDependencies": {
+    "bodokecss": "^0.5.52"
   }
 }
