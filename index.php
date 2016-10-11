@@ -7,57 +7,67 @@
 	</div>
 */ ?>
 
-<div class="container">
 
-	<?php if (have_posts()) : ?>
+<div class="row">
 
-		<div class="posts">
-			<div class="vertical-guide">
+	<div class="col-md-3">
+		<div class="panel">
+			Sidebar
+		</div>
+	</div>
 
-			<?php
-			$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-			$total_post_count = wp_count_posts();
-			$published_post_count = $total_post_count->publish;
-			$total_pages = ceil( $published_post_count / $posts_per_page );
+	<div class="col-md-9">
+		<?php if (have_posts()) : ?>
 
-			if ( "1" < $paged ) : ?>
+			<div class="posts">
+				<div class="vertical-guide">
 
-				<div class="page-title">
+				<?php
+				$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+				$total_post_count = wp_count_posts();
+				$published_post_count = $total_post_count->publish;
+				$total_pages = ceil( $published_post_count / $posts_per_page );
 
-					<h4><?php printf( __('Page %s of %s', 'lingonberry'), $paged, $wp_query->max_num_pages ); ?></h4>
+				if ( "1" < $paged ) : ?>
+
+					<div class="page-title">
+
+						<h4><?php printf( __('Page %s of %s', 'lingonberry'), $paged, $wp_query->max_num_pages ); ?></h4>
+
+					</div>
+
+				<?php endif; ?>
+
+			    	<?php while (have_posts()) : the_post(); ?>
+
+						<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+				    		<?php get_template_part( 'content', get_post_format() ); ?>
+
+			    		</div> <!-- /post -->
+
+			        <?php endwhile; ?>
+
+				<?php if ( $wp_query->max_num_pages > 1 ) : ?>
+
+					<div class="post-nav archive-nav">
+
+						<?php echo get_next_posts_link( __('&laquo; Older<span> posts</span>', 'lingonberry')); ?>
+
+						<?php echo get_previous_posts_link( __('Newer<span> posts</span> &raquo;', 'lingonberry')); ?>
+
+					</div> <!-- /post-nav archive-nav -->
+
+				<?php endif; ?>
 
 				</div>
-
-			<?php endif; ?>
-
-		    	<?php while (have_posts()) : the_post(); ?>
-
-					<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-			    		<?php get_template_part( 'content', get_post_format() ); ?>
-
-		    		</div> <!-- /post -->
-
-		        <?php endwhile; ?>
-
-			<?php if ( $wp_query->max_num_pages > 1 ) : ?>
-
-				<div class="post-nav archive-nav">
-
-					<?php echo get_next_posts_link( __('&laquo; Older<span> posts</span>', 'lingonberry')); ?>
-
-					<?php echo get_previous_posts_link( __('Newer<span> posts</span> &raquo;', 'lingonberry')); ?>
-
-				</div> <!-- /post-nav archive-nav -->
-
-			<?php endif; ?>
+			</div> <!-- /posts -->
 
 		<?php endif; ?>
 
-		</div>
-	</div> <!-- /posts -->
+	</div>
 
-</div><!-- /page -->
+</div><!-- /row -->
 
 
 <?php get_footer(); ?>

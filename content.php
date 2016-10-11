@@ -1,14 +1,18 @@
-<div class="post-bubbles">
+<?php if (!is_single()): ?>
+	<div class="post-bubbles">
 
-	<a href="<?php the_permalink(); ?>" class="format-bubble" title="<?php the_title_attribute(); ?>"></a>
+		<?php if ( is_sticky() ) : ?>
+			<a href="<?php the_permalink(); ?>" title="<?php _e( 'Sticky post', 'lingonberry'); ?>: <?php the_title_attribute(); ?>" class="sticky-bubble"><?php _e( 'Sticky post', 'lingonberry'); ?></a>
+		<?php endif; ?>
 
-	<?php if ( is_sticky() ) : ?>
-		<a href="<?php the_permalink(); ?>" title="<?php _e( 'Sticky post', 'lingonberry'); ?>: <?php the_title_attribute(); ?>" class="sticky-bubble"><?php _e( 'Sticky post', 'lingonberry'); ?></a>
-	<?php endif; ?>
+		<a href="<?php the_permalink(); ?>" class="format-bubble" title="<?php the_title_attribute(); ?>">
+			<i class="fa fa-pencil icon"></i>
+		</a>
 
-</div>
+	</div>
+<?php endif; ?>
 
-<div class="content-inner">
+<div class="content-inner col-md-8 col-md-offset-2">
 
 	<div class="post-header">
 
@@ -86,6 +90,8 @@
 
 	<?php endif; ?>
 
+	<?php @include('components/post-archive-nav.php'); ?>
+
 </div> <!-- /post content-inner -->
 
-<div class="clear"></div>
+<?php comments_template( '', true ); ?>

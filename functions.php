@@ -51,24 +51,23 @@ add_action( 'wp_enqueue_scripts', 'lingonberry_load_javascript_files' );
 
 
 // Enqueue styles
-function lingonberry_load_style() {
-	if ( !is_admin() ) {
-	    // wp_enqueue_style( 'lingonberry_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Raleway:600,500,400' );
-	    // wp_enqueue_style( 'lingonberry_style', get_stylesheet_uri() );
-	    wp_enqueue_style( 'wanchope', get_css_dir().'wanchope.css' ); // Wanchope styles
-	}
+function theme_load_style() {
+    // wp_enqueue_style( 'lingonberry_googleFonts', '//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Raleway:600,500,400' );
+    // wp_enqueue_style( 'lingonberry_style', get_stylesheet_uri() );
+    add_editor_style( str_replace( ',', '%2C', $font_url ) );
 }
-// add_action('wp_print_styles', 'lingonberry_load_style');
+wp_enqueue_style( 'wanchope', get_css_dir().'wanchope.css' ); // Wanchope styles
+add_action('wp_print_styles', 'theme_load_style');
 
 
 
 // Add editor styles
-function lingonberry_add_editor_styles() {
-    add_editor_style( 'lingonberry-editor-styles.css' );
-    $font_url = '//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Raleway:600,500,400';
-    add_editor_style( str_replace( ',', '%2C', $font_url ) );
-}
-add_action( 'init', 'lingonberry_add_editor_styles' );
+// function lingonberry_add_editor_styles() {
+//     add_editor_style( 'lingonberry-editor-styles.css' );
+//     $font_url = '//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Raleway:600,500,400';
+//     add_editor_style( str_replace( ',', '%2C', $font_url ) );
+// }
+// add_action( 'init', 'lingonberry_add_editor_styles' );
 
 
 // Add footer widget areas
@@ -482,7 +481,7 @@ class lingonberry_Customize {
 	           <?php self::lingonberry_generate_css('body a', 'color', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('body a:hover', 'color', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('.header', 'background', 'accent_color'); ?>
-	           <?php self::lingonberry_generate_css('.post-bubbles a:hover', 'background-color', 'accent_color'); ?>
+	           <?php // self::lingonberry_generate_css('.post-bubbles a:hover', 'background-color', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('.mejs-horizontal-volume-current', 'background-color', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('.post-nav a:hover', 'background-color', 'accent_color'); ?>
 	           <?php self::lingonberry_generate_css('.comment-meta-content cite a:hover', 'color', 'accent_color'); ?>

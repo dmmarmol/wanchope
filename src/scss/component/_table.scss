@@ -1,0 +1,44 @@
+/* Tables --------------------------------------- */
+
+
+.post-content {
+	table {
+		border-collapse: collapse;
+	    border-spacing: 0;
+	    empty-cells: show;
+	    font-size: 0.9em;
+	    width: 100%;
+	    margin-bottom: 1.1em;
+	}
+	th, td {
+		padding: 2%;
+		margin: 0;
+		overflow: visible;
+		line-height: 120%;
+		border-bottom: 1px solid #DDD;
+	}
+	caption {
+		color: #444;
+		text-align: center;
+		padding: 2%;
+	}
+	thead {
+		vertical-align: bottom;
+		white-space: nowrap;
+	}
+
+	th {
+		font-weight: bold;
+		color: #444;
+	}
+	table tbody {
+		> tr:nth-child(odd) > td {
+			background: #f9f9f9;
+		}
+	}
+}
+
+
+
+
+

@@ -3,13 +3,10 @@
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 		<div class="posts">
-			<div class="vertical-guide">
 
-				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-					<?php get_template_part( 'content', get_post_format() ); ?>
-
-					<?php @include('components/post-archive-nav.php'); ?>
+				<?php get_template_part( 'content', get_post_format() ); ?>
 
 			   	<?php endwhile; else: ?>
 
@@ -17,7 +14,6 @@
 
 				<?php endif; ?>
 
-				</div> <!-- /vertical-guide -->
 			</div> <!-- /post -->
 
 	</div> <!-- /posts -->

@@ -1,3 +1,8 @@
+/**
+ * Post preview
+ * @view index.php
+ */
+
 
 /**
  * Featured image
@@ -30,10 +35,16 @@
 	.format-bubble {
 	    height: $post-bubble-size;
 	    width: $post-bubble-size;
-	    background: #DDD url(images/1x/post-formats/standard.png) no-repeat center;
-	    background-size: ($post-bubble-size / 2.5) auto;
+	    background-color: #DDD;
 	    margin-top: $post-bubble-size;
 	    transition: background $transition-speed ease;
+	    text-align: center;
+	    .icon {
+	    	font-size: ($post-bubble-size / 2.5);
+	    	line-height: 1em;
+	    	vertical-align: middle;
+	    	display: inline-block;
+	    }
 	}
 	a {
 		position: relative;

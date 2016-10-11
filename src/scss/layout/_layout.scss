@@ -1,10 +1,3 @@
-$content-inner-width: 		87.5%;
-
-$side-content-width: 		100% - $content-inner-width;
-$header-left-margin: 		$side-content-width;
-
-$post-bubble-size: 			50px;
-
 @import "header";
 @import "navigation";
 
@@ -13,7 +6,9 @@ $post-bubble-size: 			50px;
 
 }
 
-
+main {
+	padding-top: $main-padding-top;
+}
 
 /**
  * Push-to-right elements
@@ -21,8 +16,8 @@ $post-bubble-size: 			50px;
 .content-inner,
 .post-nav {
 	@include clear();
-    width: $content-inner-width;
-    margin-left: $side-content-width;
+    // width: $content-inner-width;
+    // margin-left: $side-content-width;
 }
 
 /**
@@ -44,8 +39,8 @@ $post-bubble-size: 			50px;
 	    z-index: 10;
 	}
 	&:after {
-	    left: $side-content-width / 3;
-	    bottom: 63px;
+	    left: $vertical-divider-offset;
+	    top: -$main-padding-top;
 	    width: 2px;
 	    height: 100%;
 	    background: rgba(0,0,0,0.05);
@@ -87,7 +82,7 @@ $post-bubble-size: 			50px;
  */
 .posts {
 	position: relative;
-	padding-top: $offset * 4;
+	// padding-top: $offset * 4;
 }
 
 .post {
