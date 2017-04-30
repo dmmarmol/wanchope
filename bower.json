@@ -1,32 +1,19 @@
 {
-  "name": "wp-wanchope",
-  "description": "Wanchope is a minimal wordpress theme",
-  "main": "gulpfile.js",
+  "name": "mozaik-theme-starter",
+  "version": "4.3.0",
   "authors": [
-    "Diego Martin Marmol"
+    "Mozaik Ltd. <developers@mozaik.com>"
   ],
-  "license": "ISC",
+  "description": "A starter-kit for your WordPress themes. Build tools included! :)",
   "keywords": [
-    "Wanchope",
-    "Huracan",
-    "Wordpress",
-    "Theme",
-    "Avila",
-    "Ramon"
+    "WordPress"
   ],
-  "moduleType": [],
-  "homepage": "",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "bootstrap-sass": "~3.3.6"
-  },
-  "devDependencies": {
-    "bodokecss": "^0.5.52"
-  }
+  ]
 }
