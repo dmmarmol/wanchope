@@ -8,18 +8,18 @@ $IMGPATH:			'../images/';
 	@return url( $IMGPATH + $path + if($refresh!=false, '?' + $refresh, '') );
 }
 
-$base-em:			0.9375em;
-$offset:			$base-em;
+$base-em:				0.9375em;
+$offset:				$base-em;
 
-$transition-speed:	0.25s;
-$animation-speed: 	$transition-speed * 2;
+$transition-speed:		0.25s;
+$animation-speed:		$transition-speed * 2;
 
 // Colors
-$title-color: 			#2D3642;
+$title-color:			#2D3642;
 $text-color:			#555;
 $text-muted:			#999;
-$ui-color-primary: 		#DDD;
-$ui-color-secondary: 	#f1f1f1;
+$ui-color-primary:		#DDD;
+$ui-color-secondary:	#f1f1f1;
 
 // $brand-primary:			#000;
 $brand-secondary:		#2D3642;
@@ -39,19 +39,21 @@ $main-padding-top:			50px;
 $vertical-divider-offset: 		$main-padding-top;
 $post-bubble-size: 				$vertical-divider-offset;
 
+$content-inner-vertical-padding:	$offset * 2;
+$content-inner-horizontal-padding:	$offset * 3;
 
 
 // @import "reset";
 h1, h2, h3, h4, h5, h6, p, blockquote, address, big, cite, code, em, font, img, small, strike, sub, sup, li, ol, ul, fieldset, form, label, legend, button, table, caption, tr, th, td {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 100%;
-    line-height: 1;
-    font-family: inherit;
-    text-align: left;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 100%;
+	line-height: 1;
+	font-family: inherit;
+	text-align: left;
 }
 
 // Bootstrap
@@ -87,16 +89,16 @@ main {
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    border: none;
-    zoom: 1.001;
-    color: $text-color;
-    background: $ui-color-secondary;
-    font-family: 'Raleway', 'Helvetica 		Neue', sans-serif;
-    word-break: break-word;
-    hyphens: auto;
-    hyphens: auto;
+	margin: 0;
+	padding: 0;
+	border: none;
+	zoom: 1.001;
+	color: $text-color;
+	background: $ui-color-secondary;
+	font-family: 'Raleway', 'Helvetica 		Neue', sans-serif;
+	word-break: break-word;
+	hyphens: auto;
+	hyphens: auto;
 }
 
 h1 { font-size: 1.875em; }
@@ -114,13 +116,13 @@ hr {
  * Bootstrap alert
  */
 .alert {
-    margin-top: 1.5em;
-    margin-bottom: 1.5em;
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
 }
 
 
 .navbar {
-    display: none;
+	display: none;
 }
 
 .token.operator,
@@ -129,7 +131,7 @@ hr {
 .token.string, .style
 .token.string,
 .token.variable {
-    background: transparent;
+	background: transparent;
 }
 
 img { max-width: 100%; }

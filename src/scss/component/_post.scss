@@ -171,7 +171,13 @@
 .post-nav {
 	padding: ($offset * 4) ($offset * 4);
     background: $brand-secondary;
+    margin-top: $content-inner-horizontal-padding;
+    margin-left: -$content-inner-horizontal-padding;
+    margin-right: -$content-inner-horizontal-padding;
+    margin-bottom: -$content-inner-vertical-padding;
     .btn {
+    	@include truncate-line();
+		max-width: 100%;
     	@include button-variant(
     		#FFF,
     		darken($brand-secondary, 10%),
