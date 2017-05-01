@@ -1,212 +1,200 @@
-# The Mozaik WordPress Theme Boilerplate
+# A WORDPRESS/GULP STARTER KIT
 
-This is a WordPress theme starter-kit meant to offer a first-class developer experience.
+Designing WordPress themes the old-fashioned way is time-consuming and error-prone. Automating the build process allows us to integrate best practices into our workflow while saving time. This project is a *starter kit* for developing highly optimized WordPress themes with [Gulp](http://gulpjs.com/), [npm](https://www.npmjs.com/), and [Sass](http://sass-lang.com/), among other tools. This is *not* meant to be a starter theme or framework (although I have included a *minimum viable theme* to demonstrate some of the possibilities). It is, instead, a kind of *project scaffolding* and *example workflow* for modern and efficient WordPress theme development.
 
-## Contents
+The latest version of this starter kit features a modular Gulp file design inspired by Dan Tello's excellent [gulp-starter](https://github.com/greypants/gulp-starter). Configuration is isolated from the tasks themselves to make it easier to change paths and modify settings. This approach is slightly more complicated than what I originally [outlined on my blog](http://synapticism.com/dev/wordpress-theme-development-with-gulp-bower-and-sass/) but also far more powerful. Live local development is now facilitated by your choice of [BrowserSync](http://www.browsersync.io/) or [LiveReload](http://livereload.com/) (the default choice).
 
-- [Full Feature List](#full-feature-list)
-- [Important Prerequisites](#important-prerequisites)
-	- [Dev Environment](#dev-environment)
-	- [WordPress](#wordpress)
-	- [JavaScript](#javascript)
-	- [CSS](#css)
-- [Development Guidelines](#development-guidelines)
-- [Standard Theme Development Process](#standard-theme-development-process)
-	- [Setup](#setup)
-	- [Development](#development)
-	- [Production](#production)
-- [Reading Recommendations](#reading-recommendations)
-- [License](#license)
-- [FAQ](#faq)
-	- [1. How do I use jQuery with wp-theme-starter ?](#1-how-do-i-use-jquery-with-wp-theme-starter-)
+Why use this project instead of any of the alternatives? A few advantages:
 
-## Full Feature List
+* It doesn't try and do too much.
+* You should be able to easily drop your own theme into the `src` folder and start hacking without much additional setup.
+* Documentation and comments in the code assume a novice level of understanding.
+* Builds on existing WordPress and Gulp best practices without doing anything too crazy.
+* Includes several JS and Sass integrations to show you some of the possibilities. All of these are easily removed.
+* This kind of workflow will save you a ton of time and help you make better, more readily-optimized themes once you learn how it all works.
 
-- [x] Separate development theme and auto-generated clutter-free production (built) theme
-- [x] Easy enough to port already existing themes over to it
-- [x] gulp build process
-	- [x] Dev Mode
-		- [x] Auto browser refresh/injection on save (even for php files!) powered by BrowserSync
-		- [x] JavaScript module bundling, chunking and sourcemaps powered by Webpack
-		- [x] JavaScript ES6+ support via Babel
-		- [x] JavaScript linting via eslint
-		- [x] SCSS/SASS compilation and sourcemaps powered by libsass
-		- [ ] SCSS linting via scss-lint (waiting for first stable release of scss-lint)
-		- [x] CSS prefixing via autoprefixer
-		- [x] SVG sprite generation via svg-sprite
-	- [x] Production Mode
-		- [x] Minified CSS via cssmin
-		- [x] Uglify, dedupe JS via Webpack
-		- [x] Theme image optimization via imagemin
-		- [x] SVG optimization via svgmin
-	- [x] Build process easily extendable
-- [x] NPM and Bower workflows supported
-- [x] Theme Helpers Library (For more details check out the [library's README](https://github.com/MozaikAgency/wp-theme-starter/tree/master/theme/library))
-	- [x] Responsive images specification implementation
-		- [x] Helper function to print WordPress media by attachment id using responsive background images,
-		      the picture element or img-srcset-sizes
-		- [x] Responsive images polyfill via picturefill
-		- [x] Builtin lazyload helper supported by aFarkas/lazysizes
-	- [x] BEM Style simplified customizable/extendable nav-menu-walker
-	- [x] BEM Style simplified customizable/extendable pagination renderer that easily supports custom queries
-	- [x] BEM Style simplified customizable/extendable breadcrumbs renderer that is based on a given menu
-	- [x] Utility classes to make it easier working with SVGs and SVG Sprites
-- [x] Battle tested. Used in a multitude of small and large scale projects!
 
-## Important Prerequisites
 
-### Dev Environment
+## INSTALLATION
 
-1. Have [node and npm](https://nodejs.org/) installed on your system *(node@5.0.0)*
-1. Have [gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) globally installed *(gulp@^3.9.0)*
+If you're already up and running with most of the usual Node ecosystem tools this starter kit won't require much additional effort.
 
-- *You can use [`nvm`](https://github.com/creationix/nvm) to manage the node versions installed on your computer*
-- *You can use [`npm-check-updates`](https://www.npmjs.com/package/npm-check-updates) to update the node modules in your theme (Note that updating may break things, so be careful)* 
+### REQUIRED
 
-#### Windows
+* Install [npm](http://blog.npmjs.org/post/85484771375/how-to-install-npm).
+* Install [Gulp](http://gulpjs.com/): `npm install -g gulp`.
+* Install [JSHint](http://jshint.com/): `npm install -g jshint`. (You can skip this and cut JSHint out of the workflow but it will take some additional work.)
+* Download or clone this repo: `git clone https://github.com/synapticism/wordpress-gulp-starter-kit.git`.
 
-On Windows you may need to do some of the following if you run into trouble when running `npm install` in this project:
+### OPTIONAL
 
-- Install Python - Install version 2.7 of Python and add it to your path or/and create a PYTHONPATH environment variable.
-- Install Visual Studio (Express Edition is fine) - We will need this for some of modules that are compiled when installing Theme Starter. [Download VS Express](https://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx), get one of the versions that has C++ - Express 2013 for Windows Desktop for example.
-- Set Visual Studio Version Flags - We need to tell node-gyp (something that is used for compiling addons) what version of Visual Studio we want to compile with. You can do this either through an environment variable GYP_MSVS_VERSION. If you are using Express, you have to say GYP_MSVS_VERSION=2013e.
+* Install [Bower](http://bower.io/): `npm install bower -g` (helps manage front-end dependencies, particularly CSS libraries and such; see below for more info).
+* Install [Composer](https://getcomposer.org/doc/00-intro.md) (a PHP package manager, not really necessary).
+* Install [Sass](http://sass-lang.com/) (only if the built-in, default `libsass` compiler isn't good enough for your needs): `gem install sass` (requires Ruby).
 
-Thanks to [Ryanlanciaux](http://ryanlanciaux.github.io/blog/2014/08/02/using-jest-for-testing-react-components-on-windows/)
 
-### WordPress
 
-1. Read [the WordPress theme development guidelines](http://codex.wordpress.org/Theme_Development)
-1. Understand [the WordPress template hierarchy](http://codex.wordpress.org/images/9/96/wp-template-hierarchy.jpg)
-1. Understand [the WordPress Loop](http://codex.wordpress.org/The_Loop)
-1. Understand [how WordPress helps with Data Validation/Sanitization](http://codex.wordpress.org/Data_Validation)
-1. Read up on the following WordPress core APIs:
-	- [the Plugin API](http://codex.wordpress.org/Plugin_API)
-	- [the Shortcode API](http://codex.wordpress.org/Shortcode_API)
-1. Understand when you should use a Custom Functionality Plugin instead of implementing functionality within a theme
- 	- [Creating a custom functions plugin for end users](http://justintadlock.com/archives/2011/02/02/creating-a-custom-functions-plugin-for-end-users)
- 	- [How to Create a Custom Functionality Plugin (And Why You Need One)](https://www.nutsandboltsmedia.com/how-to-create-a-custom-functionality-plugin-and-why-you-need-one/)
-	
-### JavaScript
+## SETUP
 
-1. This project uses [webpack](http://webpack.github.io/) to provide support for modular JS, read up on the functionality & tools it provides
+* Edit `gulpconfig.js` and, *at the very least*, change the `project` variable to match the name of your theme. If you like the way this workflow is setup you shouldn't need to edit any of the files under `gulpfile.js/tasks` just yet.
+* Install all dependencies by running `npm install`. This will fetch all dependencies listed in `package.json` (which includes front-end JavaScript packages and back-end tools like Gulp plugins and [BrowserSync](http://www.browsersync.io/)). You may see warnings about deprecated packages and what-not; that's probably fine, just keep going!
+* [BrowserSync](http://www.browsersync.io/) setup: assuming you have a local development environment setup all you should need to do is enter the URL into the `proxy` setting in `gulpconfig.js`. Why use BrowserSync? It's fast, awesome, and allows for simultaneous responsive development across multiple devices.
+* [LiveReload](http://livereload.com/) setup: install a browser extension for [Chrome](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei) or Firefox. Why use LiveReload? It does the job without complications or additional setup after the extension is installed.
+* This build process assumes you're up and running with [source maps for both JavaScript and Sass](http://blog.teamtreehouse.com/introduction-source-maps). You may need to configure your browser or debugging environment to make sense of the minified files generated by Gulp!
+* Run `gulp` and start hacking!
 
-### CSS
 
-1. The boilerplate assumes you are using SCSS to write your styles and compiles to CSS using [Libsass](http://libsass.org/)
-1. [Autoprefixer](https://github.com/postcss/autoprefixer) is used for adding the correct vendor prefixes to the final generated CSS
 
-## Development Guidelines
+## VOIDX: A MINIMUM VIABLE THEME
 
-- Avoid committing the built theme to the project repository
-- Avoid committing the `wp-uploads` directory to the project repository
-- Avoid making changes directly to the built theme -- Always use the build process
-- In production avoid uploading the theme development directory to a public server
-- It is good practice to enable `WP_DEBUG` in your `wp-config.php` file, *but only* during development
+Previously this project shipped without a working theme included. I figured that with all the great starter themes out there (for instance, [_s](https://github.com/Automattic/_s), [Roots](https://github.com/roots/roots), and [Bones](https://github.com/eddiemachado/bones)) it wouldn't be hard to drop one in and start theming. I don't personally use any of these so I was a little surprised to discover how tricky this can be. Starter themes, despite their "bare bones" reputation, are often bulky and opinionated. Some even ship with their own build processes already in place!
 
-## Standard Theme Development Process
+It seems there is a need for what I'd call a *minimum viable theme*: a truly bare bones WordPress starter theme featuring only the essentials to get up and running, something that you can assess at a glance. For the purposes of this project I have created such a theme, tentatively named `voidx`. It isn't pretty and isn't up to [WordPress standards](https://wordpress.org/plugins/theme-check/) but it works well enough to show off some of the power of this workflow. Feel free to play with or discard it as you wish. All files under `src` can be replaced by your own files, you just have to be sure to wire things up properly in the `gulpconfig.js` file if you swap in your own stuff. Several scripts have already been integrated to show you how it's done, but these are easily if you don't like 'em (which is sort of the point of having such scaffolding, so you can easily swap stuff in and out).
 
-### Setup
+There are two components worth a closer look:
 
-1. Install WordPress and clear it of unnecessary default themes & plugins
-1. Clone/Download the contents of this repository into a directory in your WordPress `wp-content/themes` directory (eg: "my-theme_dev") _this will be your "dev theme"_
-1. Open the terminal and navigate to the dev theme, *eg:* `cd wp-content/themes/<my-theme>_dev`
-1. (**Note:** The next steps **require** nodejs *@5.0.0* and gulpjs *@^3.9.0*)
-1. Run `npm install` to install all dev dependencies
-1. Change the `project.config.js` file with your new theme's configuration
-1. Run `gulp build` to generate the "built theme" for the first time
-1. Log in to the admin and enable the *built theme*
-	 (**Note:** The *dev theme* is not a valid theme, that's fine! Don't delete it or try to enable it!)
-1. Start Developing!
+* The script variable and enqueuing functions in `src/inc/assets.php`; these are tightly coupled with the output of the build process.
+* The theme configuration pattern described in `functions.php` and `functions-config-defaults.php`.
 
-### Development
+Whether you use anything from this built-in theme is entirely up to you. If you prefer to start working with your own theme just drop it in. You will probably need to modify paths and glob matching patterns in `gulpconfig.js` but it is designed to be fairly easy and straight-forward with lots of comments to point you in the right direction.
 
-1. Run `gulp` to begin the dev build process that uses libsass, browser-sync and webpack
-1. Develop your theme in the `/assets` and `/theme` directories, *the "built theme" will be generated by gulp*
-1. Optional stuff:
-	- use `npm install --save <module(s)>` or `bower install --save <module(s)>` to easily manage js dependencies, then use `var <module> = require('<module>');`
-	  or `import <module> from '<module>';` anywhere in your js files you want to use them
-	- explore the [`/library` directory](https://github.com/MozaikAgency/wp-theme-starter/tree/master/theme/library) in the dev theme for anything useful to your project.
 
-### Production
 
-1. Delete files you are not using from inside the `/theme` directory
-1. [Add a screenshot.png](http://codex.wordpress.org/Theme_Development#Screenshot)
-1. Before deploying run `gulp build` to generate a production ready version of the built theme
-1. Deploy the built theme directory, *not the dev directory*
+## ORGANIZATION
 
-## Reading Recommendations
+This starter kit uses `src`, `build`, and `dist` folders to organize theme development:
 
-1. [WordPress Developer Documentation](http://codex.wordpress.org/Developer_Documentation)
-1. We generally follow the [WordPress PHP Coding Standards](https://make.wordpress.org/core/handbook/coding-standards/php/) in our WP code
-1. The build process supports [<abbr title="EcmaScript 2015+">ES6+</abbr> JavaScript syntax](https://babeljs.io/docs/learn-es6/) by using [babel.js](https://babeljs.io/) to transpile ES6+
-   to ES5.
-   
-## License
+* `src`: this directory contains the raw material for your theme: templates (`src/`), PHP includes (`src/inc`), language files (`src/languages`), styles (`src/scss`), scripts (`src/js`), and images (anywhere under `src/`). **Only edit files in this directory!**
+* `build`: generated by Gulp, this is a *working copy* of your theme for use in development and testing. Symlink `build` to your `wp-content/themes` directory for local development and testing (e.g. if your theme is in `~/dev/themes/my-theme` and your local copy of WordPress is installed in `~/dev/localhost/wp` you'll want to run `ln -s ~/dev/themes/my-theme/build ~/dev/localhost/wp/wp-content/themes/my-theme`).
+* `dist`: short for distribution, this will be the final, polished copy of your theme for production. You will need to manually run `gulp dist` to create a new distribution. You can also symlink this directory for a final round of testing; just keep in mind that your theme will now be in `dist/[project]`, where `[project]` is the setting at the top of the Gulp configuration. This project folder is what you will want to deploy to production. (No more weird junk in your themes. Hooray!)
 
-This Theme Boilerplate is licensed under the [MIT license](http://opensource.org/licenses/MIT) see `license.txt`.
+Note: both the `build` and `dist` directories are disposable and can be regenerated from the contents of `src`. You aren't likely to want to edit files in this folders but you may want to open them up to diagnose issues with the build process itself.
 
-## FAQ
 
-### 1. How do I use jQuery with wp-theme-starter ?
 
-As mentioned above, wp-theme-starter uses [webpack](http://webpack.github.io/) to
-handle concatenating, minifying and optimizing the javascript in the theme. Webpack,
-like Browserify and RequireJS, is a module loader for javascript and as such requires
-each module (file) to declare the dependencies it has within it. To use jQuery, or
-any other global library, in your webpack-ed js you have a couple of choices:
+## WORKING WITH GULP
 
-- Use jQuery as an internal dependency of your bundle<br>_(this means jQuery will be included in the final JS bundle created)_
-	1. With the terminal open _within the dev theme_, type `npm install jquery --save` or `bower install jquery --save` to install jquery for the project
-	1. In the `./gulp/config/scripts.js` file add this line to the top of the file to expose webpack within this file:
-	
-			var webpack = require('webpack');
-	    
-	1. Then within the file declare that any instance of `$`,`jQuery` or `window.jQuery` within the project refers
-	   to the jQuery package we downloaded earlier. We can achieve this by adding the following to the config object:
-	   (it is worth checking out the `./gulp/core/config/scripts.js` file for the general structure of the config object)
+[Gulp](http://gulpjs.com/) is an extremely powerful tool for automating tasks from the command line. If you're new to Gulp but coming from a WordPress background I recommend reading tutorials by [Matt Banks](http://mattbanks.me/gulp-wordpress-development/) and [Mark Goodyear](http://markgoodyear.com/2014/01/getting-started-with-gulp/). I also learned a lot from a post by [Dan Trello](http://viget.com/extend/gulp-browserify-starter-faq) (and have integrated much of his approach into this project) but it might be a bit more opaque for newcomers.
 
-			...
-			options: {
-				webpack: {
-					defaults: {
-						plugins: [
-							new webpack.ProvidePlugin({
-								'$': 'jquery',
-								'jQuery': 'jquery',
-								'window.jQuery': 'jquery'
-							})
-						]
-					}
-				}
-			}
-			...
+To get started try running `gulp` from the command line. This fires `gulpfile.js/index.js` and should build a working copy of the included theme. The other command you will use from time to time is `gulp dist`, which builds a distribution copy.
 
-- Use jQuery as an external package<br>_(this means jQuery will be requested as a separate resource from the rest of your bundle. Use this when you are working with WordPress plugins that include jquery dependant scripts on the front-end)_
-	1. Declare jQuery as an external dependency of your `main.js` in the `theme_scripts` function in your `functions.php` file.
-	   Something like this:
-	   
-			wp_enqueue_script( 'main', "$theme_dir/assets/js/main.js", array( 'jquery' ), null, true );
+Configuration is handled by a single file: `gulpconfig.js`. If you leave the directory structure intact there won't be too much that needs changing here but I can think of two non-obvious components you might want to modify or at least look at:
 
-	1. In the `./gulp/config/scripts.js` file add this line to the top of the file to expose webpack within this file:
-	
-			var webpack = require('webpack');
-			
-	1. Declare jQuery as an external dependency in webpack. Add the following to `./gulp/config/scripts.js` in the webpack section of
-		 the config:
+* [BrowserSync](http://www.browsersync.io/) settings: if you are developing on a local web server you will want to enter the URL into `browsersync.proxy` and then change `watch.watcher` to `browsersync` to take it for a test drive. You'll know it's working when you run `gulp` and a new browser opens with a live copy of your web site. Make changes to any of the Sass files and they should be shown on the page almost immediately. Of course, BrowserSync really shines when you connect a mobile device to your development server, but for that you're on your own ;)
+* Script settings: draw your attention to `scripts.bundles` and `scripts.chunks`. This feature is essentially a poor man's [Browserify](http://browserify.org/) or [Webpack](https://webpack.github.io/). By defining different "chunks" (script files that combine to provide a particular feature) and "bundles" (chunks that combine to provide feature sets) you can generate an assortment of files that can be efficiently and intelligently loaded through your WordPress theme. This approach has its limitations, of course, particularly when dependencies are shared between scripts, but it should be of use to many WordPress theme developers.
 
-			...
-			options: {
-				webpack: {
-					defaults: {
-						plugins: [
-							new webpack.ProvidePlugin({
-								'$': 'jquery'
-							})
-						],
-						externals: {
-							jquery: 'window.jQuery'
-						}
-					}
-				}
-			}
-			...
+Interested in adding new Gulp plugins to your build system? A full tutorial is out of scope for this project but it really shouldn't be all that hard to figure out. In brief, install a plugin with `npm install [package] --save-dev`, require it in a suitable task file, add something to the configuration file if needed, and drop it into the pipeline somewhere. Some types of plugin are particularly easy to add, for instance anything listed on the [postcss.parts](http://postcss.parts/) web site once you have [gulp-postcss](https://github.com/postcss/gulp-postcss) installed and configured in `/gulpfile.js/tasks/styles.js`.
+
+
+
+## WORKING WITH NPM
+
+[npm](https://www.npmjs.com/) is great for working with packages of all kinds (front-end or back-end) and is increasingly becoming the package manager of choice. Previously this starter kit emphasized the use of Bower to retrieve and manage front-end dependencies but nowadays my personal preference is to use npm, mostly because it's way easier to update dependencies than Bower using tools like [npm-check-updates](https://www.npmjs.com/package/npm-check-updates).
+
+* Find new packages with `npm search [package]`.
+* Install new packages with: `npm install [package] --save-dev`.
+* A general rule-of-thumb: if you can find it there just use npm.
+
+
+
+## WORKING WITH BOWER
+
+A few handy tips from the [Bower documentation](https://bower.io):
+
+* Search for packages with `bower search [package]` or browse the [Bower](http://bower.io/search/) web interface.
+* Install new packages with: `bower install [package] --save-dev`.
+* Remove packages by deleting a line from `bower.json` and then run `bower prune`.
+* Clean the cache with `bower cache clean` (occasionally needed when things start getting weird).
+
+
+
+## WORKING WITH SASS
+
+* This project now supports either [gulp-sass](https://www.npmjs.org/package/gulp-sass) (based on the newer and faster [libsass](https://github.com/sass/libsass), now active by default) or [gulp-ruby-sass](https://github.com/sindresorhus/gulp-ruby-sass/) (which requires [the original Ruby implementation of Sass](https://github.com/sass/sass)). Switch `styles.compiler` in the configuration file as needed! For reference: [Sass compatibility table](https://sass-compatibility.github.io/).
+* [Sass](http://sass-lang.com/) files can be found in `/src/scss`. Gulp will not process Sass partials beginning with `_`; these need to be explicitly imported (see `style.scss` for an example). On the other hand, if you want to output any other CSS files just drop the underscore *e.g.* `editor-style.scss`.
+* Stylesheets are post-processed with [cssnano](http://cssnano.co/), a [PostCSS](https://github.com/postcss/postcss) plugin with [Autoprefixer](https://github.com/ai/autoprefixer) baked in, eliminating the need for vendor prefixes.
+* [Sourcemaps](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/) are generated by [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) to make debugging stylesheets a snap. Note: all generated CSS is production-ready (*e.g.* minified and prefixed); sourcemaps only appear in the `build` directory.
+* Packages installed with Bower or npm are in the path by default so you can `@import` Sass files directly, as seen in `style.scss`.
+* This starter kit ships with [Normalize.css](https://necolas.github.io/normalize.css/) and [Scut](https://davidtheclark.github.io/scut/), a minimalist library of useful Sass mixins and functions for the post-vendor prefixing era. Both of these are easy to remove if you're not interested in them.
+
+
+
+## A FEW OTHER NOTES
+
+### Images
+
+Images are copied from wherever they are in `src` to the same location under `build`. They are only optimized when running `gulp dist` as this operation is resource-intensive.
+
+### PHP
+
+Like images, PHP (and language) files can go anywhere under `src` and will be copied to `build` and `dist` while preserving directory structure.
+
+
+
+## EXAMPLE INTEGRATIONS
+
+The bare bones theme included in this starter kit integrates three external JavaScript projects: [timeago](http://timeago.yarp.com/) (which facilitates human-readable timestamps), [SVG for Everybody](https://github.com/jonathantneal/svg4everybody), and [WP AJAX Page Loader](https://github.com/synapticism/wp-ajax-page-loader) (a lightweight and intelligent infinite scroll script). Have a look at `/src/inc/assets.php` file and `gulpconfig.js` to see how this works. Timeago requires only `npm install -d timeago`, an extra line in `gulpconfig.js`, and initialization in `/src/js/footer.js`. SVG for Everybody is provided as an example of a script that must be loaded in the header; hence you can see it in action at `/src/js/header.js`. The page loading script is a more involved integraton; browse the source and see for yourself.
+
+Now for one that you can try yourself! Let's say you run across a cool project like [Headroom.js](http://wicky.nillia.ms/headroom.js/) and decide you'd like to try it out. Here's how you would do that with the tools and workflow outlined in this repo:
+
+* `npm install headroom.js --save-dev`. This will save the package to the `devDependencies` field of your `package.json` file.
+* Look up the path to the script and add the appropriate entries to `scripts.bundles` and `scripts.chunks` in `gulpconfig.js`. The key name of `scripts.bundles` should match `$script_name` (below). Since this script is meant to be loaded on every page it is safe to bundle it with the `footer` script.
+* To make this script *optional* requires a bit more work:
+    * Add an option to `functions-config-defaults.php`: `defined( 'VOIDX_SCRIPTS_HEADROOM' ) || define( 'VOIDX_SCRIPTS_HEADROOM', true );`.
+    * Add the switch to the `voidx_assets_footer` functon in `inc/assets.php`: `if ( VOIDX_SCRIPTS_HEADROOM ) : $file .= '-hr';`.
+    * Add an option to `scss/_config.scss` to allow for the styling to be turned on or off: `$plugin-headroom: true;`.
+    * Add the necessary styling to `scss/_plugins.scss` wrapped in a conditional check: `@if ($plugin-headroom) { // Style }`.
+    * Create an additional script at `src/js/headroom.js` to invoke the main script:
+
+```language-javascript
+// Invoke Headroom.js; the outer function is is an IIFE, the inner one is a shortcut to document.ready
+;(function($){
+  $(function(){
+    $("#wrap-header").headroom({ offset: 60 });
+  });
+}(jQuery));
+```
+
+That's all there is to it. Now this script can be switched on or off in two configuration files. WordPress will automatically load the correct script bundle for all JavaScript-based functionality (rather than loading lots of little scripts for each feature).
+
+
+
+## TROUBLESHOOTING
+
+Things can and will go wrong when working with new tools but there are a few simple things you can do to avoid the worst of it:
+
+* Make sure everything is up to date, particularly this package, npm, node, Bower, etc.
+* If you're getting weird errors you can't figure out try deleting `node_modules` and running `npm install`.
+* You might also have some luck cleaning the cache for both npm and Bower, both of which respond to the `clean cache` command, or try `npm prune && npm install`.
+
+
+
+## TO DO
+
+* Yeoman generator ([open issue](https://github.com/synapticism/wordpress-gulp-starter-kit/issues/1); [some help here](http://yeoman.io/authoring/) would be awesome since I don't personally use Yeoman).
+* Better error handling (waiting for Gulp 4).
+* [Reduce unnecessary wrapper plugins](https://github.com/sogko/gulp-recipes/tree/master/unnecessary-wrapper-gulp-plugins).
+* RTL support with [gulp-rtlcss](https://github.com/jjlharrison/gulp-rtlcss)?
+* Explore using Gulp for translation; see [gulp-potomo](https://github.com/felixzapata/gulp-potomo), [gulp-wp-pot](https://github.com/rasmusbe/gulp-wp-pot), and [gulp-checktextdomain](https://github.com/felixzapata/gulp-checktextdomain) for examples.
+* Browserify integration? The existing bundles/chunks system is very DIY and non-standard. Feedback welcome.
+* More good ideas from [Gulp recipes](https://github.com/gulpjs/gulp/tree/master/docs/recipes).
+
+Feature requests and bug reports welcome; [open an issue](https://github.com/synapticism/wordpress-gulp-starter-kit/issues)! Please note that I intend to reign in scope creep on this project :)
+
+
+
+## SEE ALSO
+
+Like the approach but prefer something more mature, sophisticated, and opinionated? Check out [Sage](https://roots.io/sage/) and [Bedrock](https://github.com/roots/bedrock) from [Roots](http://roots.io/). Interested in another more stripped-down approach? Have a look at [gulp-wp-theme](https://github.com/whatwedo/gulp-wp-theme).
+
+
+
+## CREDITS
+
+The initial version of this repo featured a `gulpfile.js` adapted from [Matt Banks](http://mattbanks.me/gulp-wordpress-development/). Additional credit is due to [Mark Goodyear](http://markgoodyear.com/2014/01/getting-started-with-gulp/). The current version is largely based on Dan Tello's excellent [gulp-starter](https://github.com/greypants/gulp-starter). The theme templates included in this project ultimately descend from Twenty Twelve.
+
+
+
+## LICENSE
+
+Licensed under the [GPL 3.0](http://www.gnu.org/licenses/gpl.txt). You are encouraged to link back to [my web site](http://synapticism.com), [development blog](http://synapticism.com/dev), and/or [this GitHub repository](https://github.com/synapticism/wordpress-gulp-starter-kit) if you find this at all useful.

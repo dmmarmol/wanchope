@@ -1,6 +1,0 @@
-*** WP-Wanchope Changelog ***
-
-
-## Version 1.00 (2016-05-23)
-------------------------- 
-* Cloned from Lingonberry

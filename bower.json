@@ -1,19 +1,31 @@
 {
-  "name": "mozaik-theme-starter",
-  "version": "4.3.0",
+  "name": "wordpress-gulp-starter-kit",
+  "homepage": "https://github.com/synapticism/wordpress-gulp-starter-kit",
   "authors": [
-    "Mozaik Ltd. <developers@mozaik.com>"
+    {
+      "name": "Alexander Synaptic",
+      "email": "alexander@synapticism.com",
+      "homepage": "http://synapticism.com"
+    }
   ],
-  "description": "A starter-kit for your WordPress themes. Build tools included! :)",
   "keywords": [
-    "WordPress"
+    "wordpress",
+    "wordpress-theme",
+    "starter-kit",
+    "gulp",
+    "bower",
+    "sass",
+    "browsersync",
+    "livereload"
   ],
-  "license": "MIT",
+  "license": "GPL-3.0",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    ".sass-cache",
+    "build"
   ]
 }
