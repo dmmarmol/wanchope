@@ -10,17 +10,30 @@
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-  <div id="page" class="hfeed site">
-    <div id="wrap-header" class="wrap-header">
-      <header id="masthead" class="site-header">
-        <div class="site-branding">
-          <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-          <h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
-        </div>
-        <button id="responsive-menu-toggle"><?php _e( 'Menu', 'voidx' ); ?></button>
-        <nav id="site-navigation" class="site-navigation">
-          <div id="responsive-menu"><?php wp_nav_menu( array( 'theme_location' => 'header', 'menu_id' => 'menu-header', 'menu_class' => 'menu-inline' ) ); ?></div>
-        </nav>
-      </header>
-    </div>
-    <div id="wrap-main" class="wrap-main">
+	<div id="page" class="hfeed site">
+
+		<nav id="site-navigation" class="navbar navbar-primary navbar-fixed-top">
+			<div class="container Pos(rel)">
+				<?= render_menu('main', ['sandwich' => ['show_brand' => true]]); ?>
+				<?php /*
+					<button id="responsive-menu-toggle" class="btn">
+						<?= render_sandwich('Toggle Menu') ?>
+					</button>
+				*/ ?>
+			</div>
+		</nav>
+
+		<div id="wrap-main" class="container-fluid">
+			<div class="row">
+				<div class="container">
+					<div class="row">
+						<main id="main-content" class="col-md-8">
+							<div id="wrap-header" class="row" style="background-color: #<?= get_header_textcolor(); ?>;">
+								<header id="masthead" class="site-header">
+									<div class="site-branding">
+										<h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
+										<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+									</div>
+								</header>
+							</div>
+

@@ -1,0 +1,128 @@
+
+// Normalize: make browsers render things more consistently
+@import "normalize";
+
+* { box-sizing: border-box }
+
+// Custom Vars (overwrites Bootstrap)
+$base-em:				14px;
+
+$offset: 				$base-em;
+$col-offset:			15px;
+
+$transition-speed:		300ms;
+
+$brand-primary: 		#13b8f4; // Blue
+$brand-secondary: 		#999; // NON BOOTSTRAP
+$brand-success:         #5cb85c !default;
+$brand-info:            #5bc0de !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #d9534f !default;
+
+$text-color:			#263238;
+$text-color-alt:		#CFD8DC; // #FFF;
+$text-color-muted:		#B0BEC5; // Light gray
+
+$card-bg-color:			#FFF;
+$card-color:			$text-color;
+$card-footer-bg-color:	#ECEFF1;
+
+// Custom NavBar
+$navbar-primary-color: 				$text-color-alt;
+$navbar-primary-border-color: 		#B0BEC5;
+$navbar-primary-bg-color: 			#212121;
+$navbar-primary-bg-hover-color: 	$brand-primary; // darken($navbar-primary-bg-color, 45%);
+
+
+// Custom Bootstrap imports
+// Core variables and mixins
+@import "bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+// Reset and dependencies
+@import "bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/print";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+
+// Core CSS
+@import "bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/type";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+
+// Components
+@import "bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/navs";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/pager";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/labels";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/badges";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/media";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/list-group";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/panels";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/responsive-embed";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/wells";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/close";
+
+// Components w/ JavaScript
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/modals";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+
+// BodokeCSS Utilities
+@import "bodokecss/src/utils/mixins";
+@import "bodokecss/src/utils/functions";
+
+// Utility classes
+@import "bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+
+// Font
+@import "../../fonts/open-sans.scss";
+
+body {
+	font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	background-color: rgb(240,240,240);
+	color: $text-color;
+}
+
+// Main components
+$layout-navbar: 	'#site-navigation';
+$layout-left-col: 	'#left-col';
+$layout-right-col: 	'#right-col';
+
+// Everything else
+@import "./helpers";
+// @import "./general";
+@import "./layout";
+@import "./navigation";
+@import "./pagination";
+@import "./sidebar";
+
+// Tipography styles
+@import "./typo.scss";
+
+
+img {
+	max-width: 100%;
+}
+
+@for $i from 1 through 5 {
+	.Mt\(#{$i}em\) { margin-top: #{$i}em}
+	.Mb\(#{$i}em\) { margin-bottom: #{$i}em}
+}
+.Pos\(rel\) { position: relative; }
+.Pos\(abs\) { position: absolute; }

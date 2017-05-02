@@ -7,3 +7,14 @@
     svg4everybody();
   });
 }(jQuery));
+
+// function toggleDropdown(el) {
+// 	// el.preventDefault();
+// 	var parent = el.parentNode;
+// 	if (!parent.classList.contains('open')) {
+// 		parent.classList.add('open');
+// 	} else {
+// 		parent.classList.remove('open');
+// 	}
+// 	console.log(parent);
+// }

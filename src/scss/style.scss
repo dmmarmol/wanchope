@@ -4,7 +4,7 @@
 // Note: `bower_components` is already in Sass's path
 
 // Scut, a Sass utilities library: https://davidtheclark.github.io/scut/
-@import "scut";
+// @import "scut";
 
 // Configuration variables and settings
 @import "config";
@@ -29,13 +29,4 @@ Domain Path: #{metadata(theme-text-domain-path)}
 // Reset: eliminate default browser styling (optional; commented out by default)
 //@import "reset";
 
-// Normalize: make browsers render things more consistently
-@import "normalize";
-
-// Everything else
-@import "helpers";
-@import "general";
-@import "layout";
-@import "menus";
-@import "navigation";
-@import "sidebar";
+@import "app/app";

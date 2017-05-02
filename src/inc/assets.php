@@ -71,12 +71,17 @@ add_action( 'wp_enqueue_scripts', 'voidx_assets_footer' );
 
 // Load assets on single content; useful for conditional loading of the core comments script, for example
 function voidx_assets_singular() {
-  if ( !is_singular() )
+  if ( !is_singular() ) {
     return;
+  }
+
+  wp_enqueue_script( 'app', get_stylesheet_directory_uri() . '/js/' . 'app' . '.js', array( 'jquery' ), filemtime( get_template_directory() . '/js/' . 'app' . '.js' ), true ); // This last `true` is what loads the script in the footer
 
   // Load core WordPress script for handling threaded comments where appropriate
   // This isn't really useful since comments aren't a feature of this simple theme but you get the idea
-  if ( comments_open() && get_option('thread_comments') )
+  if ( comments_open() && get_option('thread_comments') ) {
     wp_enqueue_script( 'comment-reply' );
+  }
+
 }
 add_action( 'wp_enqueue_scripts', 'voidx_assets_singular' );

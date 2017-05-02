@@ -1,0 +1,21 @@
+// Lead Paragraphs
+$lead-sizes: (
+	xs: (em(22px), 1.4em),
+	sm: (em(25px), 1.25em),
+	md: (em(28px), 1.1em),
+	lg: (em(36px), 1.25em)
+);
+
+.lead {
+	@each $size, $values in $lead-sizes {
+		&.lead-#{$size} {
+			font-size: nth($values, 1);
+			line-height: nth($values, 2);
+		}
+	}
+}
+
+// Headers
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Fjalla One', 'Merienda One', 'Helvetica Neue', Helvetica, Sans-serif;
+}

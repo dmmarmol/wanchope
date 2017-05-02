@@ -20,10 +20,10 @@
   // Toggle navigation; add or remove a class to both the button and the nav element itself
   button.onclick = function() {
     if (button.className.indexOf( 'active' ) !== -1) {
-      nav.style.display = 'none';
+      nav.classList.remove('nav-hidden');
       button.className = button.className.replace(' active', '');
     } else {
-      nav.style.display = 'block';
+      nav.classList.add('nav-hidden');
       button.className += ' active';
     }
   };

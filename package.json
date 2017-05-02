@@ -54,5 +54,9 @@
   },
   "scripts": {
     "postinstall": "mv node_modules/normalize.css/normalize.css node_modules/normalize.css/_normalize.scss"
+  },
+  "dependencies": {
+    "bodokecss": "^0.5.52",
+    "bootstrap-sass": "^3.3.7"
   }
 }

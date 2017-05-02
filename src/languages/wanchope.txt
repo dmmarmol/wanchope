@@ -1,0 +1,2 @@
+msgid "Toggle Menu"
+msgstr "Colapsar Menú"

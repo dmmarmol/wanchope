@@ -1,0 +1,134 @@
+// ==== LAYOUT ==== //
+
+// These wrappers allow for backgrounds and layout options to be defined for each of the four sections (header, content, sidebar, and footer)
+// There is also a fifth meta-wrapper to bind content and sidebar on large screens
+
+// A general wrapper for various site elements
+%wrap {
+
+}
+#wrap-header {
+	padding-top: $offset * 6;
+	padding-left: $offset * 3;
+	padding-right: $offset * 3;
+	padding-bottom: $offset * 2;
+	text-align: right;
+	.site {
+		&-title , &-description {
+			margin: 0;
+		}
+		&-title {
+			color: white(0.7);
+			font-size: 3em;
+			margin-bottom: $offset;
+		}
+		&-description {
+			color: $text-color-alt;
+			font-size: 1.4em;
+		}
+	}
+}
+#wrap-main { // Wrapper around content and sidebar
+	padding-top: $navbar-height;
+}
+.wrap-content {
+
+}
+
+
+#main-content {
+}
+
+// Multiple post listed (index, archive, search, etc.)
+.multiple-post {
+	.entry-title {
+		font-size: 1.5em;
+		margin-top: 0;
+		margin-bottom: 0.75em;
+	}
+	.entry-link {
+		display: block;
+		text-decoration: none;
+	}
+	.post-categories {
+		padding: 0;
+		list-style: none;
+		li {
+			display: inline-block;
+			&:after {
+				content: ', ';
+				color: $text-color-muted;
+			}
+			&:last-child {
+				&:after {
+					content: '';
+				}
+			}
+			a {
+				font-size: 0.8em;
+				color: $text-color-muted;
+				font-weight: 600;
+				text-transform: uppercase;
+				text-decoration: none;
+			}
+		}
+	}
+	.entry-content {
+		margin-bottom: $offset;
+	}
+}
+
+.card {
+	@include make-row();
+	@include clearfix();
+	margin-bottom: 2em;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	box-shadow: 0 2px 4px 0 black(0.3);
+	background-color: $card-bg-color;
+	padding-top: $offset * 2;
+	.entry-link, .entry-footer, .post-categories {
+		padding-left: $offset * 2;
+		padding-right: $offset * 2;
+	}
+	&:first-child {
+		margin-top: 2em;
+	}
+	> a {
+		// margin-left: -$offset;
+		// margin-right: -$offset;
+		color: $card-color;
+	}
+	> a, footer {
+	}
+	footer {
+		// margin-left: -$offset * 2;
+		// margin-right: -$offset * 2;
+		background-color: $card-footer-bg-color;
+	}
+}
+
+#side-content {
+	// background: green;
+	border: 1px solid green;
+}
+
+
+.wrap-sidebar {
+}
+.wrap-footer {
+
+}
+.site-header,
+.site-footer {
+}
+.site-title {
+}
+.site-description {
+}
+.site-content {
+
+}
+.site-navigation {
+
+}
